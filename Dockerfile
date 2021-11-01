@@ -29,6 +29,12 @@ RUN apt-get update \
 
 RUN pip -q install cqlsh
 
+RUN apt-get install apt-transport-https ca-certificates dirmngr
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E0C56BD4
+RUN echo "deb https://repo.clickhouse.com/deb/stable/ main/" | sudo tee \
+    /etc/apt/sources.list.d/clickhouse.list
+RUN apt-get install -y clickhouse-server clickhouse-client
+
 # Locale setup
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
